@@ -1,8 +1,4 @@
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+import { User } from "@/types/users";
 
 export async function getUsers(
   id: string | null,
