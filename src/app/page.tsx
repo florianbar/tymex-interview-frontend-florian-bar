@@ -12,6 +12,7 @@ import Search from "@/components/ui/search";
 import Button, { BUTTON_SIZE } from "@/components/ui/button";
 import Label from "@/components/ui/label";
 import Loader from "@/components/ui/loader";
+import NoUsers from "@/components/no-users";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
@@ -20,7 +21,7 @@ export default function Home() {
 
   const [limitSize, setLimitSize] = useState(DEFAULT_LIMIT);
 
-  const { data, isPending, isError, error, isSuccess } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["users", filterType, debouncedFilterTerm, limitSize],
     queryFn: () => {
       const props: FetchUsersProps = {};
@@ -75,13 +76,13 @@ export default function Home() {
 
         {isError && <p>Error: {error.message}</p>}
 
-        {isSuccess && data?.length === 0 && debouncedFilterTerm && (
-          <p>No users found matching &quot;{debouncedFilterTerm}&quot;</p>
+        {debouncedFilterTerm && data?.length === 0 && (
+          <NoUsers filterTerm={debouncedFilterTerm} />
         )}
 
         <Users users={data} />
 
-        {!isPending && (
+        {!isPending && data && data.length > 0 && (
           <div className="w-[340px] pt-6 mx-auto">
             <Button onClick={incrementLimitSize} size={BUTTON_SIZE.LG}>
               Load more
