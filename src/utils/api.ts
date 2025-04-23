@@ -1,4 +1,5 @@
 import { User } from "@/types/users";
+import { DEFAULT_LIMIT } from "@/constants/users";
 
 export interface FetchUsersProps {
   id?: number;
@@ -9,7 +10,7 @@ export interface FetchUsersProps {
 }
 
 export async function fetchUsers(props: FetchUsersProps): Promise<User[]> {
-  const { id, name, email, page = 1, limit = 20 } = props;
+  const { id, name, email, page = 1, limit = DEFAULT_LIMIT } = props;
 
   let url = process.env.NEXT_PUBLIC_USERS_API_URL || "";
 
