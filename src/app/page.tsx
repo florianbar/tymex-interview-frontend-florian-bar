@@ -68,9 +68,9 @@ export default function Home() {
   }, [data]);
 
   return (
-    <div className="flex justify-between items-start">
-      <div className="w-[380px] p-4">
-        <h2 className="my-3 text-lg font-semibold uppercase">Filter</h2>
+    <div className="lg:flex justify-between items-start">
+      <div className="sticky top-0 z-10 bg-background lg:bg-transparent lg:relative lg:w-[380px] p-4">
+        <h2 className="md:my-3 text-lg font-semibold uppercase">Filter</h2>
 
         <div className="mt-4 mb-6">
           <Search onChange={handleFilterChange} />
@@ -87,7 +87,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex-1 p-6 h-screen overflow-auto">
+      <div className="flex-1 p-4 md:p-6 md:h-screen md:overflow-auto">
         <div className="mb-6">
           <h2 className="text-3xl font-semibold uppercase">Results</h2>
         </div>
@@ -103,7 +103,7 @@ export default function Home() {
         <Users users={allUsers} />
 
         {hasNextPage && (
-          <div className="w-[340px] pt-6 mx-auto">
+          <div className="md:w-[340px] md:pt-6 mx-auto">
             <Button
               onClick={() => fetchNextPage()}
               size={BUTTON_SIZE.LG}

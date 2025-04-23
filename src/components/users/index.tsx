@@ -11,7 +11,7 @@ export default function Users({ users }: UsersProps) {
   }
 
   return (
-    <ul className="grid grid-cols-4 gap-10 mb-10">
+    <ul className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-10 mb-10">
       {users.map((user) => (
         <li key={user.id} className="p-4 bg-gray-700/50 rounded-xl">
           <UserImage alt={user.name} />
