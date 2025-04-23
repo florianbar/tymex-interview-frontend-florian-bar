@@ -8,7 +8,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
 import Users from "@/components/users";
 import Select from "@/components/ui/select";
-import Input from "@/components/ui/input";
+import Search from "@/components/ui/search";
 import Button, { BUTTON_SIZE } from "@/components/ui/button";
 import Label from "@/components/ui/label";
 
@@ -51,7 +51,7 @@ export default function Home() {
     <div className="flex justify-between items-start">
       <div className="w-[380px] p-4">
         <div className="mt-4 mb-6">
-          <Input onChange={handleFilterChange} />
+          <Search onChange={handleFilterChange} />
         </div>
 
         <Label>Filter by</Label>
