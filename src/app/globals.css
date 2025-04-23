@@ -5,6 +5,16 @@
   --foreground: #fff;
   --tymex-primary-1: #da458f;
   --tymex-primary-2: #da34dd;
+  --tymex-purple-1: #dd5afe;
+  --tymex-purple-2: #6366f1;
+  --tymex-green-1: #49dd81;
+  --tymex-green-2: #22b4c6;
+  --tymex-yellow-1: #fe955a;
+  --tymex-yellow-2: #f1da63;
+  --tymex-red-1: #fe5a5a;
+  --tymex-red-2: #f163d2;
+  --tymex-blue-1: #43a6f6;
+  --tymex-blue-2: #5868f3;
 }
 
 @theme inline {
@@ -12,6 +22,16 @@
   --color-foreground: var(--foreground);
   --color-tymex-primary-1: var(--tymex-primary-1);
   --color-tymex-primary-2: var(--tymex-primary-2);
+  --color-tymex-purple-1: var(--tymex-purple-1);
+  --color-tymex-purple-2: var(--tymex-purple-2);
+  --color-tymex-green-1: var(--tymex-green-1);
+  --color-tymex-green-2: var(--tymex-green-2);
+  --color-tymex-yellow-1: var(--tymex-yellow-1);
+  --color-tymex-yellow-2: var(--tymex-yellow-2);
+  --color-tymex-red-1: var(--tymex-red-1);
+  --color-tymex-red-2: var(--tymex-red-2);
+  --color-tymex-blue-1: var(--tymex-blue-1);
+  --color-tymex-blue-2: var(--tymex-blue-2);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
