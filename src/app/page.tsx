@@ -52,6 +52,8 @@ export default function Home() {
   return (
     <div className="flex justify-between items-start">
       <div className="w-[380px] p-4">
+        <h2 className="my-3 text-lg font-semibold uppercase">Filter</h2>
+
         <div className="mt-4 mb-6">
           <Search onChange={handleFilterChange} />
         </div>
