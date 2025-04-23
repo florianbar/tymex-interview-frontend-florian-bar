@@ -9,7 +9,7 @@ import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
 import Users from "@/components/users";
 import Select from "@/components/ui/select";
 import Input from "@/components/ui/input";
-import Button from "@/components/ui/button";
+import Button, { BUTTON_SIZE } from "@/components/ui/button";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
@@ -47,35 +47,49 @@ export default function Home() {
   }
 
   return (
-    <>
-      <div className="mb-3">
-        <label>Filter by:</label>
-        <Select
-          options={[
-            { label: "Name", value: SEARCH_CATEGORY.NAME },
-            { label: "Email", value: SEARCH_CATEGORY.EMAIL },
-          ]}
-          value={filterType}
-          onChange={handleFilterTypeChange}
-        />
+    <div className="flex justify-between items-start">
+      <div className="w-[380px] p-4">
+        <div className="mb-3">
+          <label>Filter by:</label>
+          <Select
+            options={[
+              { label: "Name", value: SEARCH_CATEGORY.NAME },
+              { label: "Email", value: SEARCH_CATEGORY.EMAIL },
+            ]}
+            value={filterType}
+            onChange={handleFilterTypeChange}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Filter:</label>
+          <Input onChange={handleFilterChange} />
+        </div>
       </div>
 
-      <div className="mb-3">
-        <label>Filter:</label>
-        <Input onChange={handleFilterChange} />
+      <div className="flex-1 p-6 h-screen overflow-auto">
+        <div className="mb-6">
+          <h2 className="text-3xl font-semibold uppercase">Results</h2>
+        </div>
+
+        {isPending && <p>Loading...</p>}
+
+        {isError && <p>Error: {error.message}</p>}
+
+        {(!data || data.length === 0) && debouncedFilterTerm && (
+          <p>No users found matching &quot;{debouncedFilterTerm}&quot;</p>
+        )}
+
+        <Users users={data} />
+
+        {!isPending && (
+          <div className="w-[340px] pt-6 mx-auto">
+            <Button onClick={incrementLimitSize} size={BUTTON_SIZE.LG}>
+              Load more ({limitSize})
+            </Button>
+          </div>
+        )}
       </div>
-
-      {isPending && <p>Loading...</p>}
-
-      {isError && <p>Error: {error.message}</p>}
-
-      {(!data || data.length === 0) && debouncedFilterTerm && (
-        <p>No users found matching &quot;{debouncedFilterTerm}&quot;</p>
-      )}
-
-      <Users users={data} />
-
-      <Button onClick={incrementLimitSize}>Load more ({limitSize})</Button>
-    </>
+    </div>
   );
 }
