@@ -7,6 +7,7 @@ import { fetchUsers, FetchUsersProps } from "@/utils/api";
 import useDebounce from "@/hooks/useDebounce";
 import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
 import Users from "@/components/users";
+import Select from "@/components/ui/select";
 import Button from "@/components/ui/button";
 
 export default function Home() {
@@ -32,8 +33,8 @@ export default function Home() {
     refetchInterval: 60000,
   });
 
-  function handleFilterTypeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setFilterType(event.target.value);
+  function handleFilterTypeChange(value: string) {
+    setFilterType(value);
   }
 
   function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -48,15 +49,14 @@ export default function Home() {
     <>
       <div className="mb-3">
         <label>Filter by:</label>
-        <select value={filterType} onChange={handleFilterTypeChange}>
-          {Object.values(SEARCH_CATEGORY).map(
-            (value: string, index: number) => (
-              <option key={index} value={value}>
-                {value}
-              </option>
-            )
-          )}
-        </select>
+        <Select
+          options={[
+            { label: "Name", value: SEARCH_CATEGORY.NAME },
+            { label: "Email", value: SEARCH_CATEGORY.EMAIL },
+          ]}
+          value={filterType}
+          onChange={handleFilterTypeChange}
+        />
       </div>
 
       <div className="mb-3">
