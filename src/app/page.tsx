@@ -10,6 +10,7 @@ import Users from "@/components/users";
 import Select from "@/components/ui/select";
 import Input from "@/components/ui/input";
 import Button, { BUTTON_SIZE } from "@/components/ui/button";
+import Label from "@/components/ui/label";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
@@ -49,22 +50,19 @@ export default function Home() {
   return (
     <div className="flex justify-between items-start">
       <div className="w-[380px] p-4">
-        <div className="mb-3">
-          <label>Filter by:</label>
-          <Select
-            options={[
-              { label: "Name", value: SEARCH_CATEGORY.NAME },
-              { label: "Email", value: SEARCH_CATEGORY.EMAIL },
-            ]}
-            value={filterType}
-            onChange={handleFilterTypeChange}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Filter:</label>
+        <div className="mt-4 mb-6">
           <Input onChange={handleFilterChange} />
         </div>
+
+        <Label>Filter by</Label>
+        <Select
+          options={[
+            { label: "Name", value: SEARCH_CATEGORY.NAME },
+            { label: "Email", value: SEARCH_CATEGORY.EMAIL },
+          ]}
+          value={filterType}
+          onChange={handleFilterTypeChange}
+        />
       </div>
 
       <div className="flex-1 p-6 h-screen overflow-auto">
