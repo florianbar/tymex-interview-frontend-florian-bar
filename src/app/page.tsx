@@ -83,7 +83,7 @@ export default function Home() {
         {!isPending && (
           <div className="w-[340px] pt-6 mx-auto">
             <Button onClick={incrementLimitSize} size={BUTTON_SIZE.LG}>
-              Load more ({limitSize})
+              Load more
             </Button>
           </div>
         )}
