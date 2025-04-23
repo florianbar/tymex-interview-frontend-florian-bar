@@ -13,6 +13,7 @@ import Button, { BUTTON_SIZE } from "@/components/ui/button";
 import Label from "@/components/ui/label";
 import Loader from "@/components/ui/loader";
 import NoUsers from "@/components/no-users";
+import ErrorMessage from "@/components/ui/error-message";
 import { User } from "@/types/users";
 
 export default function Home() {
@@ -93,7 +94,7 @@ export default function Home() {
 
         {isPending && <Loader>Loading Users</Loader>}
 
-        {isError && <p>Error: {error.message}</p>}
+        {isError && <ErrorMessage title="Error">{error.message}</ErrorMessage>}
 
         {debouncedFilterTerm && !isPending && allUsers.length === 0 && (
           <NoUsers filterTerm={debouncedFilterTerm} />
