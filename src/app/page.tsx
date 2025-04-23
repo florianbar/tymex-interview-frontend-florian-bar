@@ -8,6 +8,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
 import Users from "@/components/users";
 import Select from "@/components/ui/select";
+import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 
 export default function Home() {
@@ -33,12 +34,12 @@ export default function Home() {
     refetchInterval: 60000,
   });
 
-  function handleFilterTypeChange(value: string) {
-    setFilterType(value);
+  function handleFilterTypeChange(type: string) {
+    setFilterType(type);
   }
 
-  function handleFilterChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setFilterTerm(event.target.value);
+  function handleFilterChange(value: string) {
+    setFilterTerm(value);
   }
 
   function incrementLimitSize() {
@@ -61,7 +62,7 @@ export default function Home() {
 
       <div className="mb-3">
         <label>Filter:</label>
-        <input type="text" value={filterTerm} onChange={handleFilterChange} />
+        <Input onChange={handleFilterChange} />
       </div>
 
       {isPending && <p>Loading...</p>}
