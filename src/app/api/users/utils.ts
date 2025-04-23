@@ -1,4 +1,5 @@
 import { User } from "@/types/users";
+import { DEFAULT_LIMIT } from "@/constants/users";
 
 export async function getUsers(
   id: string | null,
@@ -26,12 +27,10 @@ export async function getUsers(
     );
   }
 
-  if (page && limit) {
-    filteredUsers = filteredUsers.slice(
-      (parseInt(page) - 1) * parseInt(limit),
-      parseInt(page) * parseInt(limit)
-    );
-  }
+  const pageNum = page ? parseInt(page) : 1;
+  const limitNum = limit ? parseInt(limit) : DEFAULT_LIMIT;
+  const startIndex = (pageNum - 1) * limitNum;
+  const endIndex = startIndex + limitNum;
 
-  return filteredUsers;
+  return filteredUsers.slice(startIndex, endIndex);
 }

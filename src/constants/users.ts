@@ -3,4 +3,4 @@ export const SEARCH_CATEGORY = {
   EMAIL: "email",
 };
 
-export const DEFAULT_LIMIT = 12;
+export const DEFAULT_LIMIT = 20;

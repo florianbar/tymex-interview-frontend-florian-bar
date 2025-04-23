@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { fetchUsers, FetchUsersProps } from "@/utils/api";
 import useDebounce from "@/hooks/useDebounce";
@@ -13,27 +13,43 @@ import Button, { BUTTON_SIZE } from "@/components/ui/button";
 import Label from "@/components/ui/label";
 import Loader from "@/components/ui/loader";
 import NoUsers from "@/components/no-users";
+import { User } from "@/types/users";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
   const [filterTerm, setFilterTerm] = useState("");
   const debouncedFilterTerm = useDebounce(filterTerm);
 
-  const [limitSize, setLimitSize] = useState(DEFAULT_LIMIT);
-
-  const { data, isPending, isError, error } = useQuery({
-    queryKey: ["users", filterType, debouncedFilterTerm, limitSize],
-    queryFn: () => {
-      const props: FetchUsersProps = {};
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isError,
+    error,
+  } = useInfiniteQuery<User[]>({
+    queryKey: ["users", filterType, debouncedFilterTerm],
+    queryFn: async ({ pageParam = 1 }) => {
+      const props: FetchUsersProps = {
+        page: pageParam as number,
+        limit: DEFAULT_LIMIT,
+      };
 
       if (filterType === SEARCH_CATEGORY.NAME) {
-        props["name"] = debouncedFilterTerm;
+        props.name = debouncedFilterTerm;
       } else if (filterType === SEARCH_CATEGORY.EMAIL) {
-        props["email"] = debouncedFilterTerm;
+        props.email = debouncedFilterTerm;
       }
 
-      return fetchUsers({ ...props, limit: limitSize });
+      return fetchUsers(props);
     },
+    getNextPageParam: (lastPage: User[], allPages: User[][]) => {
+      return lastPage.length === DEFAULT_LIMIT
+        ? allPages.length + 1
+        : undefined;
+    },
+    initialPageParam: 1,
     refetchInterval: 60000,
   });
 
@@ -45,9 +61,10 @@ export default function Home() {
     setFilterTerm(value);
   }
 
-  function incrementLimitSize() {
-    setLimitSize((prevSize) => prevSize + DEFAULT_LIMIT);
-  }
+  const allUsers = useMemo(() => {
+    if (!data) return [];
+    return data?.pages.flat() ?? [];
+  }, [data]);
 
   return (
     <div className="flex justify-between items-start">
@@ -78,16 +95,20 @@ export default function Home() {
 
         {isError && <p>Error: {error.message}</p>}
 
-        {debouncedFilterTerm && data?.length === 0 && (
+        {debouncedFilterTerm && !isPending && allUsers.length === 0 && (
           <NoUsers filterTerm={debouncedFilterTerm} />
         )}
 
-        <Users users={data} />
+        <Users users={allUsers} />
 
-        {!isPending && data && data.length > 0 && (
+        {hasNextPage && (
           <div className="w-[340px] pt-6 mx-auto">
-            <Button onClick={incrementLimitSize} size={BUTTON_SIZE.LG}>
-              Load more
+            <Button
+              onClick={() => fetchNextPage()}
+              size={BUTTON_SIZE.LG}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "Loading more..." : "Load more"}
             </Button>
           </div>
         )}

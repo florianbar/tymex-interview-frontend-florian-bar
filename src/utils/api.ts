@@ -13,18 +13,15 @@ export async function fetchUsers(props: FetchUsersProps): Promise<User[]> {
   const { id, name, email, page = 1, limit = DEFAULT_LIMIT } = props;
 
   let url = process.env.NEXT_PUBLIC_USERS_API_URL || "";
+  const params = new URLSearchParams();
 
-  if (id || name || email || page || limit) {
-    const params = new URLSearchParams();
+  if (id) params.append("id", id.toString());
+  if (name) params.append("name", name);
+  if (email) params.append("email", email);
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
 
-    if (id) params.append("id", id.toString());
-    if (name) params.append("name", name);
-    if (email) params.append("email", email);
-    if (page) params.append("page", page.toString());
-    if (limit) params.append("limit", limit.toString());
-
-    url += `?${params.toString()}`;
-  }
+  url += `?${params.toString()}`;
 
   const response = await fetch(url);
 
