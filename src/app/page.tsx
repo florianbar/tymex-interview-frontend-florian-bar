@@ -6,14 +6,15 @@ import { useQuery } from "@tanstack/react-query";
 import * as api from "@/utils/api";
 import type { FetchUsersProps } from "@/utils/api";
 import useDebounce from "@/hooks/useDebounce";
-import { SEARCH_CATEGORY } from "@/constants/users";
+import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
+import Users from "@/components/users";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
   const [filterTerm, setFilterTerm] = useState("");
   const debouncedFilterTerm = useDebounce(filterTerm);
 
-  const [limitSize, setLimitSize] = useState(20);
+  const [limitSize, setLimitSize] = useState(DEFAULT_LIMIT);
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["users", filterType, debouncedFilterTerm, limitSize],
@@ -71,16 +72,7 @@ export default function Home() {
         <p>No users found matching &quot;{debouncedFilterTerm}&quot;</p>
       )}
 
-      {data && data.length > 0 && (
-        <ul>
-          {data.map((user) => (
-            <li key={user.id} className="mb-3">
-              <p>{user.name}</p>
-              <p>{user.email}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+      <Users users={data} />
 
       <button type="button" onClick={incrementLimitSize}>
         Load more ({limitSize})
