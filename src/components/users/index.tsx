@@ -10,11 +10,14 @@ export default function Users({ users }: UsersProps) {
   }
 
   return (
-    <ul>
+    <ul className="grid grid-cols-4 gap-8 mb-6">
       {users.map((user) => (
-        <li key={user.id}>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
+        <li key={user.id} className="p-4 bg-gray-700/50 rounded-md">
+          <div className="w-full h-[233px] bg-tymex-primary-1 rounded-sm" />
+          <div className="pt-5">
+            <p className="text-md font-semibold">{user.name}</p>
+            <p className="text-sm opacity-75">{user.email}</p>
+          </div>
         </li>
       ))}
     </ul>
