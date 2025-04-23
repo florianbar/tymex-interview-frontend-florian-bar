@@ -43,7 +43,7 @@ export default function Home() {
   }
 
   function incrementLimitSize() {
-    setLimitSize((prevSize) => prevSize + 10);
+    setLimitSize((prevSize) => prevSize + DEFAULT_LIMIT);
   }
 
   return (
