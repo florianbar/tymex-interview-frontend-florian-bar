@@ -1,4 +1,6 @@
-interface FetchUsersProps {
+import { User } from "@/types/users";
+
+export interface FetchUsersProps {
   id?: number;
   name?: string;
   email?: string;
@@ -6,9 +8,10 @@ interface FetchUsersProps {
   limit?: number;
 }
 
-export default function fetchUsers(props: FetchUsersProps): Promise<Response> {
-  const { id, name, email, page, limit } = props;
-  const url = process.env.NEXT_PUBLIC_USERS_API_URL || "";
+export async function fetchUsers(props: FetchUsersProps): Promise<User[]> {
+  const { id, name, email, page = 1, limit = 20 } = props;
+
+  let url = process.env.NEXT_PUBLIC_USERS_API_URL || "";
 
   if (id || name || email || page || limit) {
     const params = new URLSearchParams();
@@ -19,8 +22,14 @@ export default function fetchUsers(props: FetchUsersProps): Promise<Response> {
     if (page) params.append("page", page.toString());
     if (limit) params.append("limit", limit.toString());
 
-    return fetch(`${url}?${params.toString()}`);
+    url += `?${params.toString()}`;
   }
 
-  return fetch(url);
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch users");
+  }
+
+  return await response.json();
 }
