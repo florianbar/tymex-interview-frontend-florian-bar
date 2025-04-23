@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import * as api from "@/utils/api";
-import type { FetchUsersProps } from "@/utils/api";
+import { fetchUsers, FetchUsersProps } from "@/utils/api";
 import useDebounce from "@/hooks/useDebounce";
 import { SEARCH_CATEGORY, DEFAULT_LIMIT } from "@/constants/users";
 import Users from "@/components/users";
+import Button from "@/components/ui/button";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
@@ -27,7 +27,7 @@ export default function Home() {
         props["email"] = debouncedFilterTerm;
       }
 
-      return api.fetchUsers({ ...props, limit: limitSize });
+      return fetchUsers({ ...props, limit: limitSize });
     },
     refetchInterval: 60000,
   });
@@ -74,9 +74,7 @@ export default function Home() {
 
       <Users users={data} />
 
-      <button type="button" onClick={incrementLimitSize}>
-        Load more ({limitSize})
-      </button>
+      <Button onClick={incrementLimitSize}>Load more ({limitSize})</Button>
     </>
   );
 }
