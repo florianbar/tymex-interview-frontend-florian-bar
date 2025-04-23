@@ -25,7 +25,7 @@ export default function Select(props: SelectProps) {
 
   return (
     <select
-      className="border border-tymex-gray rounded-md px-1.5 py-2.5 w-full text-[15px] font-medium"
+      className="border border-gray-500 rounded-sm px-1.5 py-2.5 w-full text-[15px] font-medium"
       onChange={handleChange}
       value={selectedOption || ""}
     >

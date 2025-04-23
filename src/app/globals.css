@@ -3,7 +3,6 @@
 :root {
   --background: #0a0d23;
   --foreground: #fff;
-  --tymex-gray: #89888b;
   --tymex-primary-1: #da458f;
   --tymex-primary-2: #da34dd;
 }
@@ -11,7 +10,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-tymex-gray: var(--tymex-gray);
   --color-tymex-primary-1: var(--tymex-primary-1);
   --color-tymex-primary-2: var(--tymex-primary-2);
 
