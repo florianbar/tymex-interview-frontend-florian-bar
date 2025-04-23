@@ -21,7 +21,7 @@ export default function Select(props: SelectProps) {
   return (
     <input
       type={type}
-      className="border border-gray-500 rounded-sm p-2.5 w-full text-[15px] font-medium"
+      className="border border-gray-500 rounded-sm p-2.5 w-full text-[15px] font-medium outline-none focus:ring-0 focus:border-gray-400"
       value={value}
       onChange={handleChange}
       placeholder={placeholder}
