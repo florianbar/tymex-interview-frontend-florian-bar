@@ -11,6 +11,7 @@ import Select from "@/components/ui/select";
 import Search from "@/components/ui/search";
 import Button, { BUTTON_SIZE } from "@/components/ui/button";
 import Label from "@/components/ui/label";
+import Loader from "@/components/ui/loader";
 
 export default function Home() {
   const [filterType, setFilterType] = useState(SEARCH_CATEGORY.NAME);
@@ -19,7 +20,7 @@ export default function Home() {
 
   const [limitSize, setLimitSize] = useState(DEFAULT_LIMIT);
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending, isError, error, isSuccess } = useQuery({
     queryKey: ["users", filterType, debouncedFilterTerm, limitSize],
     queryFn: () => {
       const props: FetchUsersProps = {};
@@ -70,11 +71,11 @@ export default function Home() {
           <h2 className="text-3xl font-semibold uppercase">Results</h2>
         </div>
 
-        {isPending && <p>Loading...</p>}
+        {isPending && <Loader>Loading Users</Loader>}
 
         {isError && <p>Error: {error.message}</p>}
 
-        {(!data || data.length === 0) && debouncedFilterTerm && (
+        {isSuccess && data?.length === 0 && debouncedFilterTerm && (
           <p>No users found matching &quot;{debouncedFilterTerm}&quot;</p>
         )}
 
