@@ -8,7 +8,7 @@ export async function getUsers(
   page: string | null,
   limit: string | null
 ): Promise<User[]> {
-  const users = await import("@/mock-data/users.json");
+  const users = await import("./users.json");
   let filteredUsers = users.users;
 
   if (id) {
