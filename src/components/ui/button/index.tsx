@@ -29,6 +29,7 @@ export default function Button(props: ButtonProps) {
         disabled ? "opacity-50" : "cursor-pointer hover:opacity-80"
       } ${sizeStyles}`}
       onClick={() => onClick?.()}
+      disabled={disabled}
     >
       {children}
     </button>
